@@ -1,6 +1,5 @@
 *.aux
-std.pdf
-std-gram.ext
+iso_cpp_modules_ecosystem_technical_report.pdf
 *.idx
 *.toc
 *.log
