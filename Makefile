@@ -2,7 +2,7 @@
 
 STDPDF = pdflatex iso_cpp_modules_ecosystem_technical_report | grep -v "^Overfull"
 
-default: rebuild
+default: full
 
 clean:
 	rm -f iso_cpp_modules_ecosystem_technical_report.pdf *.aux config/*.aux *.idx config/*.idx *.ilg *.ind *.log *.lot *.lof *.tmp *.out *.glo *.gls *.fls *.fdb* *.toc *.xtr
@@ -18,9 +18,11 @@ rebuild:
 full: reindex
 
 reindex: rebuild
-	makeindex -s generalindex.ist generalindex
 	$(STDPDF)
-	makeindex -s basic.gst -o xrefindex.gls xrefindex.glo
+	$(STDPDF)
+	$(STDPDF)
+	makeindex -s config/generalindex.ist generalindex
+	$(STDPDF)
 	$(STDPDF)
 	$(STDPDF)
 
