@@ -12,5 +12,123 @@ entities, which can be represented in the form of compiler specific data
 structures (e.g. ASTs, metadata, etc) or any intermediate representation chosen
 by the implementer.
 
+\indexdefn{module}
+\indexdefn{module|named}
+\definition{module, named module}{definitions.module}
+The collection of translation units whose \grammarterm{module-declaration}
+specify the same \grammarterm{module-name}.
+See \Cpp{} Standard [module.unit] paragraph 1.
+
+\indexdefn{module!unit}
+\definition{module unit}{definitions.module-unit}
+A translation unit that contains a \grammarterm{module-declaration}.
+See \Cpp{} Standard [module.unit] paragraph 1.
+
+\indexdefn{module!interface}
+\definition{module interface}{definitions.module-interface}
+The set of declarations belonging to a module that are necessarily reachable
+(\Cpp{} Standard [module.reach] paragraph 1) from outside of that module.
+See \Cpp{} Standard [module].
+
+\indexdefn{module!interface unit}
+\definition{module interface unit}{definitions.module-interface-unit}
+A module unit whose \grammarterm{module-declaration} starts with
+\grammarterm{export-keyword}.
+See \Cpp{} Standard [module.unit] paragraph 2.
+
+\indexdefn{module!implementation unit}
+\definition{module implementation unit}{definitions.module-implementation-unit}
+A module unit which is not a module interface unit.
+See \Cpp{} Standard [module.unit] paragraph 2.
+
+\indexdefn{module!Mathias unit}
+\definition{Mathias unit}{definitions.mathias-unit}
+A module unit that is not importable by any other translation unit.
+See \Cpp{} Standard [module].
+
+\indexdefn{module!partition}
+\indexdefn{module!partition unit}
+\definition{module partition, module partition unit}{definitions.module-partition}
+A module unit whose \grammarterm{module-declaration} contains a
+\grammarterm{module-partition}.
+A module partition can only consist of a single translation unit, so the terms
+"module partition" and a "module partition unit" are interchangeable.
+See \Cpp{} Standard [module.unit] paragraph 3.
+
+\indexdefn{built module interface}
+\indexdefn{BMI (Built Module Interface)}
+\definition{built module interface (BMI)}{definitions.built-module-interface}
+The artifact created by a compiler to represent a module unit or header unit.
+The format for this representation is implementation specific and holds C++
+entities, which can be represented in the form of compiler specific data
+structures (e.g. ASTs, metadata, etc) or any intermediate representation chosen
+by the implementer.
+
+\indexdefn{built module interface!BMI configuration}
+\definition{BMI configuration}{definitions.bmi-configuration}
+The set of characteristics at translation time that identify compatible BMIs.
+These traits are implementation defined.
+It may be required that BMIs have the same configuration.
+
+\indexdefn{built module interface!generation}
+\definition{BMI generation}{definitions.bmi-generation}
+The act of creating a BMI from a module unit or header unit, possibly as a
+distinct step from translation of said unit.
+
+\indexdefn{dependency!information}
+\definition{dependency information}{definitions.dependency-information}
+Information about the translation units and textual includes of a C++ source
+file.
+This includes the name of the module the source file exports, the modules that
+it imports, the files it textually includes, and other information.
+
+\indexdefn{dependency!information format}
+\indexdefn{DIF (Dependency Information Format)}
+\definition{dependency information format (DIF)}{definitions.dependency-information-format}
+A structured file format that describes dependency information.
+
+\indexdefn{dependency!scanner}
+\definition{dependency scanner}{definitions.dependency-scanner}
+A tool which parses C++ source files and outputs their dependency information.
+Such a tool might be a standalone utility or an option that can be enabled in a
+C++ compiler driver.
+
+\indexdefn{build strategy!implicit}
+\definition{implicit build strategy}{definitions.implicit-build-strategy}
+Modules build mode where the compiler knows how to build all components for a
+module and its dependencies without requiring the user to explicitly invoke the
+compiler for building specific parts or said dependencies.
+In this mode the compiler incorporates some of the roles of a build system.
+
+\indexdefn{build strategy!explicit}
+\definition{explicit build strategy}{definitions.explicit-build-strategy}
+Modules build mode where components of a module and its dependencies are built
+separately, with explicit compiler invocations being used to build each piece.
+In this mode, some external system is responsible for computing dependencies
+and schedule build order for the components.
+
+\indexdefn{module ownership!strong}
+\definition{strong module ownership}{definitions.strong-module-ownership}
+A model for module ownership where an entity with external linkage that belongs
+to a named module will be a different entity from, and will not conflict with,
+an entity with the same name in any other module.
+
+\indexdefn{module ownership!weak}
+\definition{strong module ownership}{definitions.strong-module-ownership}
+A model for module ownership where an entity with external linkage that belongs
+to a named module will conflict with an entity with the same name in any other
+module.
+
+\indexdefn{header!importable}
+\definition{importable header}{definitions.importable-header}
+TODO.
+See \Cpp{} Standard [module.import] paragraph 5.
+
+\indexdefn{include translation}
+\definition{include translation}{definitions.include-translation}
+The act of translating an \tcode{\#include} of an importable header into an
+\tcode{import} directive.
+See \Cpp{} Standard [cpp.include] paragraph 7.
+
 \indextext{definitions|)}%
 
