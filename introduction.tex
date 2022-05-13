@@ -31,18 +31,20 @@ ISO/IEC 14882:2020 is hereafter called the \defn{\Cpp{} Standard}.
 
 \rSec1[introduction.structure]{Structure of this document}
 
-\pnum
 \indextext{technical report!structure of|(}%
-\ref{definitions} introduces terms and definitions used throughout this
-technical report.
 
-\ref{usage} describes the stakeholders, requirements, and expected usage
-patterns for modules that are addressed by this technical report.
+\pnum \ref{source} discusses how tooling relates for the different
+types of \Cpp{} source files, the terminology used by tools when
+referring to those and how they relate to each other.
 
-\pnum
-Each of the remaining clauses addresses a particular topic area.
-These clauses present both \defn{findings}, where key questions are
-explored and the results of of field experience are presented, and
-\defn{guidance}, where concrete suggestions to stakeholders are made.
-\indextext{technical report!structure of|)}
+\pnum \ref{build process} discusses requirements for tooling related to the
+build process of code declaring and/or consuming \Cpp{} modules.
 
+\pnum \ref{language semantics} discusses the interpretation of specific
+features described in the \Cpp{} Standard in relationship to modules.
+
+\pnum \ref{distribution} discusses interoperability for the distribution of
+\Cpp{} libraries with modules across different compilers, build
+systems and package managers.
+
+\indextext{technical report!structure of|)}%
