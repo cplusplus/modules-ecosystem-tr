@@ -1,0 +1,84 @@
+%!TEX root = iso_cpp_modules_ecosystem_technical_report.tex
+
+\rSec0[source]{Source Files}
+
+\indextext{source files|(}%
+
+\pnum For tooling purposes, there are two main categories of source
+files: the main file, and included files. The main file of a
+translation unit is the one used to start the first phase of the
+translation.  The included files contribute to translation unit by
+methods of ``Source file inclusion''.
+
+\pnum With the exception of header units, the translation unit type
+can be defined unambiguously by the contents of the main file because
+of preprocessing restrictions established by the \Cpp{}
+Standard. Header units require additional information at the tooling
+level.
+
+\rSec1[source.types]{Translation Unit Types}
+
+\indexdefn{importable units}%
+\definition{importable units}{source.types.importable}%
+%
+Translation units with declarations and definitions that can be
+imported into another translation unit via the ``import'' keyword.
+
+\indexdefn{module interface units}%
+\definition{module interface units}{source.types.importable.interface}%
+%
+Importable translation units that contribute to the ``external
+interface'' of a named module.
+
+\indexdefn{primary module interface unit}%
+\definition{primary module interface unit}{source.types.importable.interface.primary}%
+%
+The interface unit without a partition, it can be unambiguosly
+identified by the presence of the export-keyword and the absense of a
+module-partition. There can be only one primary unit for each module.
+
+\indexdefn{module interface partition unit}%
+\definition{module interface partition unit}{source.types.importable.interface.partition}%
+%
+The interface unit with a module-partiton. It can be unambiguously
+identified by the presence of both export-keyword and the presence of
+module-partition. There can only be one unit for a given partition
+name.
+
+\indexdefn{internal module partition unit}%
+\definition{internal module partition unit}{source.types.importable.internal.partition}%
+%
+Importable translation units that do not contribute to the ``external
+interface'' of a module. An internal partition may or may not be
+reachable by the module interface units. An internal partition that is
+not reachable by the interface units is not required to be made
+available to translation units outside the module.
+
+\indexdefn{header unit}%
+\definition{header unit}{source.types.importable.header}%
+%
+Header units are the independent parsing of what would otherwise be
+available via source inclusion. They are not identifiable directly by
+the contents of the main source file. Additional information is needed
+at the tooling level to identify them. Implementations are not
+required to automatically make the header unit importation possible
+for any file that could be otherwise included.
+
+\indexdefn{module implementation unit}%
+\definition{module implementation unit}{source.types.implementation}%
+%
+Module implementation units contain the definitions that were omitted
+on the interface units and internal partitions units. It can be
+unambiguously identified by the absense of the export-keyword and the
+absence of module-partition. It may also contain other declarations,
+but those are not reachable from the module interface or internal
+partitions.
+
+\indexdefn{non-module unit}%
+\definition{non-module unit}{source.types.non-module}%
+%
+Translation units without a module-declaration that are not header
+units.
+
+\indextext{source files|)}%
+
