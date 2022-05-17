@@ -1,9 +1,74 @@
 %!TEX root = iso_cpp_modules_ecosystem_technical_report.tex
 
-\rSec0[build process]{Build Process}
+\rSec0[build]{Build Process}
 
-\indextext{build process|(}%
+\indextext{build|(}%
 
+\rSec1[build.phases]{Phases of the Build}
 
-\indextext{build process|)}%
+\pnum When building \Cpp{} code that produces or consumes modules, the
+build process needs to be broken down in different phases. The phases
+described here represent the semantic organization, not the interface
+presented to the \Cpp{} developer.
+
+\rSec2[build.phases.external-importable]{Identify External Importable Units}
+
+\pnum As the \Cpp{} standard library itself will offer a modular
+interface as well as importable headers, it will be very rarely the
+case that a build system will be able to consider only modules
+declared inside the same build context.
+
+\pnum TODO: P2577R1
+
+\rSec2[build.phases.importable-headers]{Identify Importable Headers}
+
+\pnum While external importable units may include header units, it's
+also necessary to identify any importable header internal to the
+project itself.
+
+\pnum The \Cpp{} standard describes ``importable headers'' and
+``non-importable headers'', however those cannot be differentiated
+from their content alone, therefore they need to identified at the
+tooling level.
+
+\pnum The \Cpp{} standard also allows (15.3.7) the implementation to
+optimize away source file inclusion when a header is known to be
+importable.
+
+\pnum Since an include directive may be replaced by an import
+directive, a change in the identification of header units may change
+the dependency information of any translation unit.
+
+\rSec2[build.phases.dependency-scan]{Dependency Scanning}
+
+\pnum Once the list of importable headers is defined, the dependency
+scanning phase can be performed. The dependency scanning is invoked by
+the build system on all translation units (including header units).
+
+\pnum The dependency scanning of each translation unit is independent
+of the dependency scanning of any other translation unit.
+
+\pnum TODO: D1689R5
+
+\rSec2[build.phases.bmi-generation]{Generation of the Binary Module Inteface}
+
+\pnum TODO
+
+\rSec2[build.phases.compilation]{Compilation}
+
+\pnum TODO
+
+\rSec2[build.phases.linkage]{Linkage}
+
+\pnum TODO
+
+\rSec1[build.coherency]{Coherency Requirements}
+
+\rSec1[build.header-units]{Header Units}
+
+\rSec1[build.stdlib]{Relationship with the Standard Library}
+
+\rSec1[build.trivial]{Trivial Cases}
+
+\indextext{build|)}%
 
