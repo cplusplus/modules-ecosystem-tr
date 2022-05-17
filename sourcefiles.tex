@@ -49,10 +49,12 @@ name.
 \definition{internal module partition unit}{source.types.importable.internal.partition}%
 %
 Importable translation units that do not contribute to the ``external
-interface'' of a module. An internal partition may or may not be
-reachable by the module interface units. An internal partition that is
-not reachable by the interface units is not required to be made
-available to translation units outside the module.
+interface'' of a module. It can be unambiguously identified by the
+absense of the export-keyword and the presence of module-partition. An
+internal partition may or may not be reachable by the module interface
+units. An internal partition that is not reachable by the interface
+units is not required to be made available to translation units
+outside the module.
 
 \indexdefn{header unit}%
 \definition{header unit}{source.types.importable.header}%
