@@ -4,23 +4,24 @@
 
 \indextext{build|(}%
 
-\rSec1[build.phases]{Phases of the Build}
+\rSec1[build.steps]{Steps of the Build}
 
 \pnum When building \Cpp{} code that produces or consumes modules, the
-build process needs to be broken down in different phases. The phases
+build process needs to be broken down in different steps. The steps
 described here represent the semantic organization, not the interface
-presented to the \Cpp{} developer.
+presented to the \Cpp{} developer, the organization in steps does not
+preclude parts of those steps to be executed in parallel.
 
-\rSec2[build.phases.external-importable]{Identify External Importable Units}
+\rSec2[build.steps.external-importable]{Identify External Importable Units}
 
 \pnum As the \Cpp{} standard library itself will offer a modular
 interface as well as importable headers, it will be very rarely the
 case that a build system will be able to consider only modules
 declared inside the same build context.
 
-\pnum TODO: P2577R1
+\pnum TODO: \href{https://github.com/cplusplus/modules-ecosystem-tr/issues/5}{modules-ecosystem-tr\#5}
 
-\rSec2[build.phases.importable-headers]{Identify Importable Headers}
+\rSec2[build.steps.importable-headers]{Identify Importable Headers}
 
 \pnum While external importable units may include header units, it's
 also necessary to identify any importable header internal to the
@@ -39,7 +40,9 @@ importable.
 directive, a change in the identification of header units may change
 the dependency information of any translation unit.
 
-\rSec2[build.phases.dependency-scan]{Dependency Scanning}
+\pnum TODO: \href{https://github.com/cplusplus/modules-ecosystem-tr/issues/6}{modules-ecosystem-tr\#6}
+
+\rSec2[build.steps.dependency-scan]{Dependency Scanning}
 
 \pnum Once the list of importable headers is defined, the dependency
 scanning phase can be performed. The dependency scanning is invoked by
@@ -48,27 +51,34 @@ the build system on all translation units (including header units).
 \pnum The dependency scanning of each translation unit is independent
 of the dependency scanning of any other translation unit.
 
-\pnum TODO: D1689R5
+\pnum TODO: \href{https://github.com/cplusplus/modules-ecosystem-tr/issues/7}{modules-ecosystem-tr\#7}
 
-\rSec2[build.phases.bmi-generation]{Generation of the Binary Module Inteface}
+\rSec2[build.steps.bmi-generation]{Generation of the Binary Module Inteface}
 
-\pnum TODO
+\pnum TODO: \href{https://github.com/cplusplus/modules-ecosystem-tr/issues/8}{modules-ecosystem-tr\#8}
 
-\rSec2[build.phases.compilation]{Compilation}
+\rSec2[build.steps.compilation]{Compilation}
 
-\pnum TODO
+\pnum TODO: \href{https://github.com/cplusplus/modules-ecosystem-tr/issues/9}{modules-ecosystem-tr\#9}
 
-\rSec2[build.phases.linkage]{Linkage}
+\rSec2[build.steps.linking]{Linking}
 
-\pnum TODO
+\pnum TODO: \href{https://github.com/cplusplus/modules-ecosystem-tr/issues/10}{modules-ecosystem-tr\#10}
 
 \rSec1[build.coherency]{Coherency Requirements}
 
+\pnum TODO: \href{https://github.com/cplusplus/modules-ecosystem-tr/issues/11}{modules-ecosystem-tr\#11}
+
 \rSec1[build.header-units]{Header Units}
+
+\pnum TODO: \href{https://github.com/cplusplus/modules-ecosystem-tr/issues/12}{modules-ecosystem-tr\#12}
 
 \rSec1[build.stdlib]{Relationship with the Standard Library}
 
+\pnum TODO: \href{https://github.com/cplusplus/modules-ecosystem-tr/issues/13}{modules-ecosystem-tr\#13}
+
 \rSec1[build.trivial]{Trivial Cases}
 
-\indextext{build|)}%
+\pnum TODO: \href{https://github.com/cplusplus/modules-ecosystem-tr/issues/14}{modules-ecosystem-tr\#14}
 
+\indextext{build|)}%
