@@ -20,3 +20,4 @@ iso_cpp_modules_ecosystem_technical_report.pdf
 tools/sections
 *.synctex.gz
 *.synctex*
+*~
