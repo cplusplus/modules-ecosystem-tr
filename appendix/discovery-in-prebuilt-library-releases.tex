@@ -1,0 +1,118 @@
+\infannex{discovery-prebuilt}{C++ Modules Discovery in Prebuilt
+  Library Releases}
+
+\rSec1[discovery-prebuilt.linker-arguments]{``Linker Arguments'' as a
+  mechanism to discover \Cpp{} module metadata files}
+
+\pnum This section describes a framework for the discovery of module
+metadata files on environments where the linker arguments for the
+library can be resolved early enough. This is not a requirement for
+all implementations, as some build systems need to defer the
+resolution of linker arguments to a step that is later than the
+translation of the module interfaces.
+
+\pnum While almost the entirety of the behavior of build systems and
+package managers are implementation-defined, there is once concept
+that is common to most of them: At some point, the build system and
+the package manager, when consuming a library as a prebuilt artifact,
+need to communicate enough to identify what are the linker arguments
+that a consuming build needs in order to successfully use that
+library.
+
+\pnum While the way in which those arguments are discovered is fully
+implementation-defined, while the format and semantics of those
+arguments are also fully implementation-defined, the concept that when
+you consume a prebuilt library you will need to use additional linker
+arguments is a point of convergence.
+
+\pnum It is also a point of convergence that those arguments will be
+translatable to files on disk, through implementation-defined
+translations. This is a requirement for C++ libraries being
+distributed as prebuilt artifacts today.
+
+\pnum While the format and arguments of the linker are specified in an
+implementation-defined way, the current reality is that build systems,
+package managers, static analysis tools, etc that want to interact
+with different linkers consistently need to re-implement the parsing
+of the arguments and trying to emulate the behavior of the linker.
+
+\pnum This report recommends that a toolchain should provide a
+mechanism to translate linker arguments, even if just a fragment of a
+complete linker invocation, into the input files that are going to be
+used by the linker.
+
+\pnum Third-party implementations of that translation can be provided
+in case vendors do not provide it directly, but there is room for
+better interoperability if a tool that performs that translation
+exists one way or another.
+
+\pnum The convention estalishes that metadata files will be
+deterministically named alongside the files that are used as inputs to
+the linker, such that the build system can parse those to create a
+complete understanding of all modules relevant to this project.
+
+\pnum The specific conversions from the paths to the input to the
+linkers to the paths of the metadata files are implementation
+defined. Different sections of this report will describe the
+convention for specific environments.
+
+\rSec2[discovery-prebuilt.header-only]{Header-only Libraries}
+
+\pnum Header-only libraries have been a common practice in the C++
+ecosystem. It makes a specific trade-off on how to use specific C++
+language constructs in order to avoid the complexities of the lack of
+convergence on the package management for various different
+environments.
+
+\pnum It also allows a library to avoid ABI-compatibility questions,
+and therefore support virtually any standards-conforming toolchain
+without having to provide a prebuilt artifact to any of them.
+
+\pnum It is often the case that package managers will still provide a
+release of those header-only libraries within their ecosystem, such
+that they can be addressed for dependency management as well as to
+manage required compiler arguments, such as include directories and
+compile definitions, even when linker arguments are not required.
+
+\pnum As we transition to C++ modules, it is reasonable to presume
+that the same approach can be translated, we can call them
+“importable-unit-only module libraries”. As with header-only
+libraries, there are specific constraints on how the code has to be
+written, but, in principle, any library that could be implemented as a
+header-only library could also be implemented as an
+“importable-unit-only module library”.
+
+\pnum However, C++ modules create additional requirements for the
+parsing of the consumers of a library. Therefore even if a library
+doesn’t require linker arguments, it needs to be able to specify how
+to parse those interface units coherently. In practice, that means
+there is distinctively more metadata that needs to be provided with an
+“importable-unit-only module library” than the comparable “header-only
+library”.
+
+\pnum Specifically, this will mean much more importance to the work
+done by the maintainers of the package management metadata for those
+libraries in the various package management systems. It is fair to say
+that it will not be practical, beyond illustrative cases, to consume
+C++ module libraries in the absence of some amount of package
+management infrastructure.
+
+\pnum Solving the consumption of “importable-unit-only module
+libraries” in an interoperable way will require a wider convergence on
+package management in general. Therefore this report recommends that
+package managers following this convention produce library artifacts,
+even if empty, and include linker arguments for importable-unit-only
+module libraries.
+
+\pnum This will allow the linker arguments to be a consistent point of
+convergence for all cases, which is enough ground to stand a
+convention on how to discover C++ modules in pre-built library
+releases. Future work for the convergence in the area of package
+management may make this recommendation unnecessary.
+
+\rSec2[discovery-prebuilt.conventions]{Conventions for translating
+  linker input files to module metadata files}
+
+\pnum TODO: This section should document the different conventions in
+place, there was an example in the original paper, so we need a new
+paper where that is discussed in more details.
