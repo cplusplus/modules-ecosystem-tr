@@ -19,6 +19,20 @@ interface as well as importable headers, it will be very rarely the
 case that a build system will be able to consider only modules
 declared inside the same build context.
 
+\pnum External importable units will be described in metadata files
+made available to the build system. While this report recommends a
+specific format for that metadata file, the mechanism by which the set
+of metadata files to be considered is identified will be
+implementation specific.
+
+\pnum Annex \ref{discovery-prebuilt.linker-arguments} specifies a
+convention for environments where the build system and the package
+manager can resolve linker argument fragments early enough such that
+it can be used to identify the set of module metadata files that need
+to be considered.
+
+\pnum TODO: Format of the metadata file.
+
 \pnum TODO: \href{https://github.com/cplusplus/modules-ecosystem-tr/issues/5}{modules-ecosystem-tr\#5}
 
 \rSec2[build.steps.importable-headers]{Identify Importable Headers}
