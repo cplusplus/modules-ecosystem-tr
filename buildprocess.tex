@@ -4,6 +4,73 @@
 
 \indextext{build|(}%
 
+\rSec1[build.import]{Import relationship between translation units}
+
+\pnum The name of a module used in the ``import'' and ``module''
+keywords is the ``logical name'' of a module.
+
+\pnum When a translation unit imports a named module, the translation
+unit doing the import has an import dependency on the translation unit
+providing the importable unit identified via the ``logical name''.
+
+\pnum The translation of an importable unit is externalized into an
+intermediate artifact, the Built Module Interface file (BMI). That
+file is then consumed when importing a named module.
+
+\pnum BMI files can be constructed in a way to optimize for the
+efficiency of the reuse in the import operation, which may result in a
+limitation on the number of scenarios where that file can be used.
+
+\rSec1[build.arguments]{Compiler arguments and the import relationship}
+
+\pnum ``ABI coherency'' is the expected level of coherency in the
+compiler arguments for the translation of the code in the purview of a
+module and all translation units importing that module. When that
+level of coherency is not met, the final program may fail to link or
+it may link and have undefined behavior at runtime.
+
+\pnum ``BMI coherency'' is the expected level of coherency in the
+compiler arguments for a BMI file to be used when importing a
+module. When that level of coherency is not met, the translation will
+fail because the BMI cannot be loaded.
+
+\pnum While all translation units importing a module must have ``ABI
+coherency'', different translation units importing the same module may
+not meet the requirements for ``BMI coherency''. It must be valid for
+those to consume different BMI files of the same importable unit, and
+to be linked into the same program.
+
+\pnum ``Local Preprocessor Arguments'' are the arguments that are
+expected to be different in the translation of an importable unit and
+the translation of a unit importing that named module.
+
+\pnum The decision on whether an argument is a ``Local Preprocessor
+Argument'' cannot be made by introspection on the code or the command
+line, and should be be provided by the author of the importable units
+and of the unit importing a module.
+
+\pnum To assemble a ``BMI coherent'' command line in order to produce
+a BMI file that is usable in the context of a translation unit
+importing that module, the starting point should be the compilation
+command of the translation unit doing the import, then the ``Local
+Preprocessor Arguments'' for the translation unit doing the import are
+removed, and the ones for the importable unit are integrated into the
+command line.
+
+\pnum Compilers should offer an interface to generate an identifier
+for the command line that allows matching the translation unit
+importing a module with a BMI that can be loaded in that context. That
+interface should not require the primary source file of the
+translation unit to be identified, nor the output names to be
+produced. Any preprocessor argument given to the compiler in this mode
+should be considered for the identifier.
+
+\pnum Build systems should be able to deduplicate the rules to
+generate BMI files to be used when importing the same named module
+from different translation units by getting the identifier for the
+command line of those translation units with the ``Local Preprocessor
+Arguments'' filtered out.
+
 \rSec1[build.steps]{Steps of the Build}
 
 \pnum When building \Cpp{} code that produces or consumes modules, the
