@@ -110,9 +110,41 @@ convention on how to discover C++ modules in pre-built library
 releases. Future work for the convergence in the area of package
 management may make this recommendation unnecessary.
 
-\rSec2[discovery-prebuilt.conventions]{Conventions for translating
+\rSec2[discovery-prebuilt.conventions]{Convention for translating
   linker input files to module metadata files}
 
-\pnum TODO: This section should document the different conventions in
-place, there was an example in the original paper, so we need a new
-paper where that is discussed in more details.
+\pnum The input file is considered directly, if the filesystem
+supports symbolic links, they should not be followed. For example: in
+the case of SONAME symlinks on GNU/Linux, the metata file will be
+associated with the unversioned library name, not with the final
+target of the symbolic link.
+
+\pnum The metadata file will be a different entry in the same
+directory as the path that is the input file to the linker, only with
+a different name.
+
+\pnum The name of the directory entry for the metadata is composed by
+appending to the name of the directory entry for the input file to the
+linker.
+
+\pnum The directory entry for the metadata file will have a final suffix
+composed by the dot character and XXXX (TODO: Extension of the module
+metadata file,
+\href{https://github.com/cplusplus/modules-ecosystem-tr/issues/23}{modules-ecosystem-tr\#23}).
+
+\pnum If the toolchain supports linker input files with more than one
+Instruction Set Architecture (ISA), the search should start with a
+directory name entry that includes an additional dot character
+followed by the implementation-defined ISA code before the final
+suffix, and then fallback to the directory entry name without the ISA
+code.
+
+\pnum This report recommends that toolchain implementations should
+provide a tool that translates linker argument fragments into the path
+to the related metadata files found according to the specifics of the
+implementation.
+
+\pnum This report recommends that toolchain implementations should
+provide a tool that describes what the metadata file path should be
+for a library, given the implementation-defined characteristics of the
+library being produced.
