@@ -53,6 +53,11 @@ Preprocessor Arguments'' for the translation unit doing the import are
 removed, and the ones for the importable unit are integrated into the
 command line.
 
+\pnum Header units never have any ``Local Preprocessor
+Arguments''. They are translated using the same command line of the
+translation unit importing the header unit with the ``Local
+Preprocessor Arguments'' of that translation unit removed.
+
 \pnum Compilers should offer an interface to generate an identifier
 for the command line that allows matching the translation unit
 importing a module with a BMI that can be loaded in that context. That
@@ -100,10 +105,6 @@ to be considered.
 
 \rSec2[build.steps.importable-headers]{Identify Importable Headers}
 
-\pnum While external importable units may include header units, it's
-also necessary to identify any importable header internal to the
-project itself.
-
 \pnum The \Cpp{} standard describes ``importable headers'' and
 ``non-importable headers'', however those cannot be differentiated
 from their content alone, therefore they need to identified at the
@@ -117,16 +118,53 @@ importable.
 directive, a change in the identification of header units may change
 the dependency information of any translation unit.
 
+\pnum The Built Module Interface for a header unit should have as its
+source the file that would have been found when performing source
+inclusion. Implementations should consider an error otherwise.
+
+\pnum A header is identified as importable by the presence of a
+metadata file relative to the path being found for source inclusion.
+
+\pnum The path to the metadata file is formed by removing the basename
+of the file being included from the path, then appending a separate
+directory entry with name \texttt{.importable-headers}, and finally
+appending the original basename back with an additional
+\texttt{.importable} suffix.
+
+\pnum Note: The reason for the additional directory in the search is
+to reduce the number of stat calls the tool needs to perform in order
+to identify whether a header is importable or not. The tool should
+only need to stat the \texttt{.importable-headers} directory once for
+every header in that directory.
+
+\pnum In order to allow the specification of importable headers
+without changing the location where those headers are installed, tools
+should support a mechanism to specify an additional location for
+metadata associated with a given directory.
+
 \pnum TODO: \href{https://github.com/cplusplus/modules-ecosystem-tr/issues/6}{modules-ecosystem-tr\#6}
 
 \rSec2[build.steps.dependency-scan]{Dependency Scanning}
 
-\pnum Once the list of importable headers is defined, the dependency
-scanning phase can be performed. The dependency scanning is invoked by
-the build system on all translation units (including header units).
+\pnum Importing a named module does not change the state of the
+preprocessor. Dependency scanning does not need to be aware of the
+location or the contents of the sources providing that particular
+named module.
 
-\pnum The dependency scanning of each translation unit is independent
-of the dependency scanning of any other translation unit.
+\pnum Importing a header unit changes the state of the preprocessor at
+the point of importation, therefore the dependency scanning needs to
+identify whether a header is importable or not and perform an
+emulation of the import in order to establish in which way the
+preprocessor state is changed at that point.
+
+\pnum When emulating the import of a header unit, the dependency
+scanning needs the information about what is the command that should
+be used to preprocess that importable header. That command should be
+the same as the command for the translation unit doing the import,
+without the Local Preprocessor Arguments.
+
+\pnum All header units imported by the same translation unit will be
+processed with equivalent command lines.
 
 \pnum TODO: \href{https://github.com/cplusplus/modules-ecosystem-tr/issues/7}{modules-ecosystem-tr\#7}
 
